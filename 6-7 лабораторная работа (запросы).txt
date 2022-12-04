@@ -1,0 +1,31 @@
+db.unicorns.find({gender: "f"}).count()
+---подсчет записей, которые содержат женский пол во всей коллекции
+db.unicorns.count()
+-------подсчет всех записей в коллекции единороги
+db.unicorns.find({gender: "f"}).skip(2).count(true)
+---limit и skip нельз€ использовать с count(), но если внутри count написать true, тогда можно
+----пропуска€ две первые записи, вывести количество записей, которые содержат женский пол
+db.unicorns.distinct("loves")
+----выводим уникальные значени€ из всей коллекции 
+db.unicorns.aggregate({"$group":{_id:"$gender",count:{$sum:1}}}) 
+--------aggregate это та же сама€ группировка, _id указывает по какому полю группировка, &sum-считаем 
+ db.unicorns.update({name : "Ayna"}, {$inc: { vampires: 5}})
+----------------с помощью $inc увеличиваем число вампиров у Ayna на 5
+db.unicorns.update({name : "Kenny"}, {$unset: {vampires: 1}})
+----удалили у Kenny поле vampires
+db.unicorns.update({name : "Leia"}, {$push: {loves: "melon"}})
+---с помощью $push добавили еще одно значение в массив Loves
+---ќператор $addToSet подобно оператору $push добавл€ет объекты в массив. 
+db.unicorns.update({name : "Pilot"},{$addToSet: {loves: {$each: ["melon", "carrot", "pumpkin"]}}})
+---с помощью $each можем добавить несколько элементов в массив
+db.unicorns.update({name : "Nimue"}, {$pop: {loves: 1}})
+-----с помощью $pop удал€ем элемент из массива , если указать 1-то удалитьс€ первый элемент с конца, если указать -1 -удалитс€ первый элемент с начала 
+db.unicorns.update({name : "Pilot"}, {$pull: {loves: "carrot"}})
+-----ќператор $pull удал€ет каждое вхождение элемента в массив. Ќапример, через оператор $push можно добавить одно и то же значение в массив несколько раз. ƒалее с помощью $pull удалить его
+----≈сли нужно удалить не одно значение, а сразу несколько, тогда можно применить оператор $pullAll:
+db.unicorns.getIndexes()
+---получение индекса
+db.unicorns.ensureIndex({"name" : 1})
+----создание индекса
+
+
